@@ -1,0 +1,32 @@
+{
+  "name": "DoAnHung",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Bui Quang Hung",
+  "license": "BQH",
+  "scripts": {
+    "server": "nodemon index.js",
+    "destop-app": "parcel views/index.html",
+    "dev": "concurrently \"yarn server\" \"yarn destop-app\"",
+    "build-parcel": "parcel build views/index.html"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "antd": "^4.8.2",
+    "concurrently": "^5.3.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "flat": "^5.0.2",
+    "icons": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.14",
+    "nodemon": "^2.0.6",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
+}
