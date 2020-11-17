@@ -6,13 +6,14 @@
   "license": "BQH",
   "scripts": {
     "server": "nodemon index.js",
-    "destop-app": "parcel views/index.html",
-    "dev": "concurrently \"yarn server\" \"yarn destop-app\"",
+    "web-app": "parcel views/index.html",
+    "dev": "concurrently \"yarn server\" \"yarn web-app\"",
     "build-parcel": "parcel build views/index.html"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "antd": "^4.8.2",
+    "body-parser": "^1.19.0",
     "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
@@ -20,7 +21,9 @@
     "flat": "^5.0.2",
     "icons": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.10.14",
+    "multer": "^1.4.2",
     "nodemon": "^2.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

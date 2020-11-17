@@ -1,36 +1,52 @@
 'use crt'
 require("dotenv").config()
+const fs = require("fs")
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
+const bodyParser = require('body-parser')
+const multer  = require('multer')
+const moment =  require('moment') 
 const io = require('socket.io')(server)
-//
-const PORT = process.env.PORT || 3000
 
+//config
+const PORT = process.env.PORT || 3000
+app.set('port',PORT)
 //connect database
  require("./database/index")
-//set template view
-const middleware = require('./route/Middleware/AuthMiddleware')
+ // ======================================= //
+//set forder
 app.use(express.static("public"));
-app.set('view engine', 'ejs');
-app.set("views", "./views");
-app.set('port',PORT)
 
-
-
-//inport route
-const authRoute = require('./route/authRoute.js')
-//
+//set request
 app.use(express.json())
+// for parsing application/json
+app.use(bodyParser.json()); 
+// for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })); 
+// for parsing multipart/form-data
+// ======================================== //
+
+//Middleware
+const middleware = require('./route/Middleware/AuthMiddleware')
+// ======================================== //
+//inport route 
+const authRoute = require('./route/authRoute.js') 
+app.use('/api/v1/auth',authRoute)
 app.use(middleware.middlwareIsAuth)
-app.get('/',(req,res)=>{
-   res.redirect("/auth/login") 
+const homeRoute = require('./route/homeRoute')
+app.use('api/v1/home',homeRoute)
+app.use('/api/v1/*',(req,res)=>{
+  res.status(404).send({
+    status : 404,
+    message : "Not Found!"
+  })
 })
-app.use('/auth/login',authRoute)
-let interval;
+// ======================================== //
 //socket IO
+let interval;
 io.on('connection', (socket)=>{
-    console.log("New client connected");
+    console.log("New client connected"+socket);
   if (interval) {
     clearInterval(interval);
   }

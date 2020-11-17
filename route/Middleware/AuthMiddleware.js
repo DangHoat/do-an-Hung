@@ -8,6 +8,7 @@ let middlwareIsAuth = async (request,response,next)=>{
         try{
             let dataFromToken = await jwtUltils.verifyToken(token,secretKey)
             request.token = dataFromToken
+            next()
         }catch(err){
             return respons.status(401).send({
                 message:"Unauthorized",
