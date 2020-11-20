@@ -1,6 +1,7 @@
 'use crt'
 require("dotenv").config()
 const fs = require("fs")
+const cors = require('cors')
 const express = require('express')
 const app = express()
 const server = require('http').createServer(app)
@@ -17,7 +18,9 @@ app.set('port',PORT)
  // ======================================= //
 //set forder
 app.use(express.static("public"));
-
+//set CORS
+app.use(cors())
+// ======================================= //
 //set request
 app.use(express.json())
 // for parsing application/json

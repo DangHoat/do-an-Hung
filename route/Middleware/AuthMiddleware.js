@@ -1,4 +1,4 @@
-const jwtUltils = require('../../ultils/jwt.js')
+const jwtUltils = require('../../utils/jwt')
 
 const secretKey = process.env.KEY|| "access-token-secret"
 

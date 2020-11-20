@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import './style.css'
-import HomeLayout from "../layout/HomeLayout";
+import SignOut from './pages/auth/SignOut'
+
+
 const App =()=>{
     return(
-        <div>
-             <HomeLayout />
-        </div>
-    )
+        <SignOut/>
+            )
 }
 export default App;
 
