@@ -51,6 +51,97 @@
 .SignIn-font-size__text {
     font-size: 3rem;
 }
+.signup-container{
+    width: 370px;
+}
+.signup-card{
+    border-radius: 1rem;
+}
+.signup-text-register{
+    color: rgba(17, 104, 138, 0.884);
+    font-size: 2rem;
+    font-weight: 900;
+}
+@media only screen and (max-device-width: 640px){
+    .signup-container{
+        width: 350px;
+    }
+    .signup-card{
+        border-radius: 1rem;
+    }
+    .signup-text-register{
+        color: rgba(17, 104, 138, 0.884);
+        font-size: 2rem;
+        font-weight: 900;
+    }
+}
+@media only screen and (min-device-width: 1400px){
+    .signup-container{
+        width: 570px ;
+    }
+    .signup-card{
+        border-radius: 1rem;
+        padding: 1rem;
+    }
+    .signup-text-register{
+        color: rgba(17, 104, 138, 0.884);
+        font-size: 3rem;
+        font-weight: 900;
+    }
+}
+
+.sign-back { 
+    background:url('/background.e116005a.png'); 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+.page404-h1{
+    color: rgba(3, 25, 34, 0.884);
+    font-size: 2rem;
+    font-weight: 600;
+}
+.page404-p{
+    color: rgba(6, 41, 54, 0.884);
+    font-size: 1rem;
+    font-weight: 600;
+}
+.page404-0{
+    color: rgba(75, 176, 212, 0.884) !important;
+}
+.page404-button{
+    font-weight: 900;
+    font-size: 1rem;
+    background-color: hsl(202, 69%, 32%);
+    color: #fff;
+}
+.page404-img{   
+    width: 400px;
+    height: 266.656px;
+}
+@media only screen and (min-device-width: 1400px){
+    .page404-h1{
+        color: rgba(3, 25, 34, 0.884);
+        font-size: 4rem;
+        font-weight: 700;
+    }
+    .page404-p{
+        color: rgba(30, 77, 94, 0.884);
+        font-size: 2rem;
+        font-weight: 600;
+    }
+    .page404-button{
+        font-weight: 900;
+        font-size: 1.5rem;
+        background-color: hsl(202, 69%, 32%);
+        color: #fff;
+    }
+    .page404-img{   
+        width: 600px;
+        height: 400px;
+    }
+}
 /* Image*/
 .img--user--square-1x{ width: 1rem; height: 1rem; }
 

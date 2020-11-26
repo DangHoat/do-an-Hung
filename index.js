@@ -31,13 +31,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // ======================================== //
 
 //Middleware
-const middleware = require('./route/Middleware/AuthMiddleware')
+const middleware = require('./routeAPI/Middleware/AuthMiddleware')
 // ======================================== //
-//inport route 
-const authRoute = require('./route/authRoute.js') 
+//inport routeAPI
+const authRoute = require('./routeAPI/authRoute.js')
 app.use('/api/v1/auth',authRoute)
 app.use(middleware.middlwareIsAuth)
-const homeRoute = require('./route/homeRoute')
+const homeRoute = require('./routeAPI/homeRoute')
 app.use('api/v1/home',homeRoute)
 app.use('/api/v1/*',(req,res)=>{
   res.status(404).send({
