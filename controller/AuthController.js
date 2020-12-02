@@ -3,6 +3,7 @@ const User = require('../database/Schema/User')
 
 //method post
 let login = async (req, res, next) => {
+    console.log(req.body)
     let { username, password } = req.body
     let user
     try {
