@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { string, number } = require('prop-types')
 const location = new mongoose.Schema({
    coordinate:{
-      type:Map,
+      type:Array,
       of:string
    },
    symbol:{
@@ -10,9 +10,10 @@ const location = new mongoose.Schema({
       default :"toa do"
    },
    phase:{
-
+      type:number
    },
    time_start:{
-       
+       type:Date
    }
 })
+module.exports = mongoose.model("Location",location)

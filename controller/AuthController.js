@@ -36,6 +36,12 @@ let login = async (req, res, next) => {
     }
     return res.status(404).json({ message: "Tài khoản hoặc mật khẩu không đúng", idError: 002 })
 }
+/**
+ * them moi user
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 let register = async (req, res, next) => {
     console.log(typeof (req.body.phoneNumber))
     const user = new User({
@@ -54,21 +60,40 @@ let register = async (req, res, next) => {
     }
     res.send('register')
 }
-//method get
+/**
+ *Lay toan bo user 
+ * @param {*} res 
+ * @param {*} next 
+ */
 let getUserByID = async (req, res, next) => {
     res.send(" getUserByID " + req.params.user)
 
 }
-//method patch
+/**
+ * cap nhap sua doi thong tin user
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 let updateUser = async (req, res, next) => {
 
     res.send("updateUser" + req.param.user)
 }
-//method put
+/**
+ * Lam moi token
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 let refreshToken = async (req, res, next) => {
     res.send("refreshToken")
 }
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
 //method delete
 let logout = async (req, res, next) => {
     res.send('logout')

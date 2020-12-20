@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
 const track = new mongoose.Schema({
     password:{
-        type:string
+        type:String 
     },
     phone:{
-        type:number,
+        type:Number,
         unique:true
     },
     follower:{

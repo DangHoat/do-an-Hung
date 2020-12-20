@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const moment = require('moment')
 const io = require('socket.io')(server)
+const Track  = require("./database/Schema/Track")
 
 //config
 const PORT = process.env.PORT || 3000
@@ -20,6 +21,7 @@ require("./database/index")
 app.use(express.static("public"));
 //set CORS
 app.use(cors())
+io.set('origins', '*:*'); 
 // ======================================= //
 //set request
 app.use(express.json())
@@ -47,34 +49,17 @@ app.use('/api/v1/*', (req, res) => {
 })
 // ======================================== //
 //socket IO
-let interval;
 io.on('connection', (socket) => {
   console.log("New client connected" + socket);
-
-  socket.on('join-room', (roomId, userId) => {
-    socket.join(roomId)
-    socket.to(roomId).broadcast.emit('user-connected', userId)
-
-    socket.on('disconnect', () => {
-      socket.to(roomId).broadcast.emit('user-disconnected', userId)
-    })
+  socket.on('join-room', (userId,jsonData) => {
+    console.table(userId,jsonData)
   })
-  if (interval) {
-    clearInterval(interval);
-  }
-  interval = setInterval(() => getApiAndEmit(socket), 1000);
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-    clearInterval(interval);
-  });
 })
 
+async function saveTrack(jsonData){
 
-const getApiAndEmit = socket => {
-  const response = new Date();
-  // Emitting a new message. Will be consumed by the client
-  socket.emit("FromAPI", response);
-};
+}
+
 
 server.listen(app.get('port'), () => {
   console.log(`Listening port : ${app.get('port')}`)
