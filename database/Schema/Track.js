@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const track = new mongoose.Schema({
+const trackSchema = new mongoose.Schema({
     password:{
         type:String 
     },
@@ -8,11 +8,12 @@ const track = new mongoose.Schema({
         unique:true
     },
     follower:{
-        
+        type:Array,
     },location:{
-
+        type:Object
     },
     update_at: {
         type: Date
     }
 })
+module.exports = mongoose.model("Track",trackSchema)

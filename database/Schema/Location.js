@@ -1,19 +1,18 @@
 const mongoose = require('mongoose')
-const { string, number } = require('prop-types')
-const location = new mongoose.Schema({
+const locationSchema = new mongoose.Schema({
    coordinate:{
       type:Array,
-      of:string
+      default:[]
    },
    symbol:{
-      type:string,
+      type:String,
       default :"toa do"
    },
    phase:{
-      type:number
+      type:Number
    },
    time_start:{
        type:Date
    }
 })
-module.exports = mongoose.model("Location",location)
+module.exports = mongoose.model("Location",locationSchema)

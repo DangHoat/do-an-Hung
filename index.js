@@ -10,6 +10,7 @@ const multer = require('multer')
 const moment = require('moment')
 const io = require('socket.io')(server)
 const Track  = require("./database/Schema/Track")
+const Location = require("./database/Schema/Location")
 
 //config
 const PORT = process.env.PORT || 3000
@@ -41,6 +42,8 @@ app.use('/api/v1/auth', authRoute)
 app.use(middleware.middlwareIsAuth)
 const homeRoute = require('./routeAPI/homeRoute')
 app.use('api/v1/home', homeRoute)
+const mapRoute = require('./routeAPI/mapRoute')
+app.use('api/v1/map', mapRoute)
 app.use('/api/v1/*', (req, res) => {
   res.status(404).send({
     status: 404,
@@ -52,11 +55,20 @@ app.use('/api/v1/*', (req, res) => {
 io.on('connection', (socket) => {
   console.log("New client connected" + socket);
   socket.on('join-room', (userId,jsonData) => {
-    console.table(userId,jsonData)
+    console.log(':::::::::::::::::')
+    console.log(userId,jsonData)
+    socket.join(userId)
+    console.log(':::::::::::::::::')
+    socket.to(userId).broadcast.emit(jsonData)
+    saveTrack(userId,jsonData)
   })
+  socket.emit("test","hiii")
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
 })
 
-async function saveTrack(jsonData){
+async function saveTrack(userID,jsonData){
 
 }
 
