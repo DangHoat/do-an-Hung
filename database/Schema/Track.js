@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
 const trackSchema = new mongoose.Schema({
+    name:{
+        type:String,
+        unique:true
+    },
     password:{
         type:String 
     },
@@ -8,10 +12,13 @@ const trackSchema = new mongoose.Schema({
         unique:true
     },
     follower:{
-        type:Array,
-    },location:{
-        type:Object
-    },
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    }
+    ,locations:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref :"Location"
+    }],
     update_at: {
         type: Date
     }

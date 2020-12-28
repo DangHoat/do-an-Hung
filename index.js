@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const multer = require('multer')
 const moment = require('moment')
 const io = require('socket.io')(server)
+const User = require('./database/Schema/User')
 const Track  = require("./database/Schema/Track")
 const Location = require("./database/Schema/Location")
 
@@ -35,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Middleware
 const middleware = require('./routeAPI/Middleware/AuthMiddleware')
+
 // ======================================== //
 //inport routeAPI
 const authRoute = require('./routeAPI/authRoute.js')
@@ -52,6 +54,12 @@ app.use('/api/v1/*', (req, res) => {
 })
 // ======================================== //
 //socket IO
+io.use((socket,next)=>{
+  if(socket.handshake.query.token == "doanhungmo") next()
+  else {
+    next(new Error("fake!"))
+  }
+})
 io.on('connection', (socket) => {
   console.log("New client connected" + socket);
   socket.on('join-room', (userId,jsonData) => {
@@ -63,12 +71,32 @@ io.on('connection', (socket) => {
     saveTrack(userId,jsonData)
   })
   socket.emit("test","hiii")
+  socket.on('connect_error',(err)=>{
+    console.log(err)
+  })
   socket.on("disconnect", () => {
     console.log("Client disconnected");
   });
 })
 
-async function saveTrack(userID,jsonData){
+async function saveTrack(TrackID,jsonData){
+  try {
+    await console.log(Track.find())
+    let newLocation = await Location.create({
+      $push:{
+        coordinate : jsonData.coordinate 
+      }
+    })
+    await Track.findByIdAndUpdate(TrackID,{
+      $push:{
+        newLocation : newLocation 
+      }
+    },(err,data)=>{
+      if(err) console.log(err)
+    })
+  } catch (error) {
+    console.log(error)
+  }
 
 }
 

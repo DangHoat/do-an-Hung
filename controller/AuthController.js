@@ -1,9 +1,9 @@
 const jwtUltils = require('../utils/jwt')
+const bcrypt = require('bcrypt')
 const User = require('../database/Schema/User')
 
 //method post
 let login = async (req, res, next) => {
-    console.log(req.body)
     let { username, password } = req.body
     let user
     try {
@@ -17,13 +17,13 @@ let login = async (req, res, next) => {
     if (user == null) {
         return res.status(404).json({ message: "Tài khoản hoặc mật khẩu không đúng", idError: 002 })
     }
-    if (user.password == password) {
+    if (bcrypt.compareSync(user.password,password)) {
         try {
             let reqData = {
                 username: req.body.username,
                 password: req.body.password
             }
-            let token = await jwtUltils.crearteToken(reqData)
+            let token = await jwtUltils.createToken(reqData)
             let result = {
                 username: reqData.username,
                 password: reqData.password,
@@ -46,7 +46,7 @@ let register = async (req, res, next) => {
     console.log(typeof (req.body.phoneNumber))
     const user = new User({
         username: req.body.username,
-        password: req.body.password,
+        password: bcrypt.hashSync(req.body.password,process.env.SALT),
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         role: req.body.role,
@@ -66,7 +66,24 @@ let register = async (req, res, next) => {
  * @param {*} next 
  */
 let getUserByID = async (req, res, next) => {
-    res.send(" getUserByID " + req.params.user)
+    try {
+    User.findOne({
+             id:{$eq:req.param.userID}
+        },(err,docs)=>{
+            if(err){
+                return res.status(404).send({
+                    message:"No user exist!"
+                })
+            }else{
+                return res.status(200).send(docs)
+            }
+        })
+        
+    } catch (error) {
+        return res.status(500).send({
+            message:error
+        })
+    }
 
 }
 /**
@@ -76,8 +93,22 @@ let getUserByID = async (req, res, next) => {
  * @param {*} next 
  */
 let updateUser = async (req, res, next) => {
-
-    res.send("updateUser" + req.param.user)
+    let id = req.body.id;
+    if(!id) return res.status(500).send({message:"không thể xác định user!"})
+   try {
+       User.findOneAndUpdate({ id:id},req.body,(err,docs)=>{
+           if(err) return res.status(500).send({
+               message: err
+           })
+           return res.status(200).send({
+               message:"Thành công!!"
+           })
+       })
+   } catch (err) {
+    return res.status(500).send({
+        message:err
+    })
+   }
 }
 /**
  * Lam moi token
