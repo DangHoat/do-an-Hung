@@ -1,6 +1,7 @@
 const jwtUltils = require('../utils/jwt')
 const bcrypt = require('bcrypt')
 const User = require('../database/Schema/User')
+const {validatePassword} = require('../utils/ValidInput')
 
 //method post
 let login = async (req, res, next) => {
@@ -13,11 +14,11 @@ let login = async (req, res, next) => {
     } catch (error) {
         return res.status(404).json(error)
     }
-    
+
     if (user == null) {
         return res.status(404).json({ message: "Tài khoản hoặc mật khẩu không đúng", idError: 002 })
     }
-    if (bcrypt.compareSync(user.password,password)) {
+    if (bcrypt.compareSync(password,user.password)) {
         try {
             let reqData = {
                 username: req.body.username,
@@ -38,32 +39,39 @@ let login = async (req, res, next) => {
 }
 /**
  * them moi user
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
 let register = async (req, res, next) => {
-    console.log(typeof (req.body.phoneNumber))
+  if(!validatePassword(req.body.password)){
+      return res.status(494).send({
+          message:`Mật khẩu ít nhất 8 kí tự,1 chữ hoa và 1 số!`
+      })
+  }
+  try {
+    var salt = bcrypt.genSaltSync(Math.floor(Math.random() * 10)+1)
     const user = new User({
         username: req.body.username,
-        password: bcrypt.hashSync(req.body.password,process.env.SALT),
+        password: bcrypt.hashSync(req.body.password,salt),
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         role: req.body.role,
         address: req.body.address
     })
-    try {
+  
         const newUser = await user.save()
-        res.status(200).json(newUser)
+        return res.status(200).json({
+            message : "Tạo thành công!"
+        })
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        return res.status(400).json({ message: error.message })
     }
-    res.send('register')
 }
 /**
- *Lay toan bo user 
- * @param {*} res 
- * @param {*} next 
+ *Lay toan bo user
+ * @param {*} res
+ * @param {*} next
  */
 let getUserByID = async (req, res, next) => {
     try {
@@ -78,7 +86,7 @@ let getUserByID = async (req, res, next) => {
                 return res.status(200).send(docs)
             }
         })
-        
+
     } catch (error) {
         return res.status(500).send({
             message:error
@@ -88,9 +96,9 @@ let getUserByID = async (req, res, next) => {
 }
 /**
  * cap nhap sua doi thong tin user
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
 let updateUser = async (req, res, next) => {
     let id = req.body.id;
@@ -112,18 +120,18 @@ let updateUser = async (req, res, next) => {
 }
 /**
  * Lam moi token
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
 let refreshToken = async (req, res, next) => {
     res.send("refreshToken")
 }
 /**
- * 
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
  */
 //method delete
 let logout = async (req, res, next) => {

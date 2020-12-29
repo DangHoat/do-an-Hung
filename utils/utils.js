@@ -19,7 +19,7 @@ Array.prototype.findIndex = function (obj) {
 };
 
 
-const ValidInput = require("./ValidInput");
+
 
 
 function Fencode(str) {
@@ -35,9 +35,7 @@ function returnThisWhenNull(source, result_when_null) {
     return (ValidInput.isEmpty(source) ? result_when_null : source);
 }
 
-function copyState(state) {
-    return JSON.parse(JSON.stringify(state));
-}
+
 
 function randomString(length) {
     if (length === undefined)
@@ -69,53 +67,13 @@ function getObjectValueSameKey(arr) {
 
 
 
-//-----------------Project--------------//
-function getProjectId() {
-    try {
-        return JSON.parse(sessionStorage.getItem("project")).id;
-    } catch (e) {
-        return null;
-    }
-}
-
-function getPermissionInProject() {
-    let project = JSON.parse(sessionStorage.getItem("project"));
-    let role = {
-        "admin": project.i_am_admin,
-        "member": project.i_am_member,
-        "owner": project.i_am_owner
-    };
-    return (role);
-}
-
-//--------------------------------------//
-
-function getWikiId() {
-    try {
-        return JSON.parse(localStorage.getItem('wiki')).id;
-    } catch (e) {
-        return null;
-    }
-}
-function getWikiVersion() {
-    try {
-        return JSON.parse(localStorage.getItem('wiki')).version;
-    } catch (e) {
-        return null;
-    }
-}
 
 
 module.exports = {
     Fencode: Fencode,
     returnThisWhenNull: returnThisWhenNull,
-    copyState: copyState,
     randomString: randomString,
     isExpired: isExpired,
-    getPermissionInProject: getPermissionInProject,
-    ValidInput: ValidInput,
     getObjectValueSameKey: getObjectValueSameKey,
-    getProjectId: getProjectId,
-    getWikiId: getWikiId,
-    getWikiVersion: getWikiVersion,
+
 }

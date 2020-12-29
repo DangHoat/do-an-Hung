@@ -8,13 +8,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
-        validate: {
-            validator: function(v) {
-              return require('../../ultils/checkData').validatePassword(v);
-            },
-            message: props => `${props.value} ít nhất 8 kí tự,1 chữ hoa và 1 số!`
-          }
+        required: true
     },
     phoneNumber: {
         type: Number,
@@ -31,7 +25,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         validate: (v) => {
-            return require('../../ultils/checkData').validateEmail(v)
+            return require('../../utils/ValidInput').validateEmail(v)
         },message: props => `${props.value} email không đúng định dạng`
 
     },
