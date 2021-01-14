@@ -11,10 +11,10 @@ const trackSchema = new mongoose.Schema({
         type:Number,
         unique:true
     },
-    follower:{
+    follower:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
-    }
+    }]
     ,locations:[{
         type:mongoose.Schema.Types.ObjectId,
         ref :"Location"

@@ -55,9 +55,9 @@ const authRoute = require('./routeAPI/authRoute.js')
 app.use('/api/v1/auth', authRoute)
 app.use(middleware.middlwareIsAuth)
 const trackRoute = require('./routeAPI/trackRoute')
-app.use('api/v1/home', trackRoute)
+app.use('/api/v1/track', trackRoute)
 const mapRoute = require('./routeAPI/mapRoute')
-app.use('api/v1/map', mapRoute)
+app.use('/api/v1/map', mapRoute)
 app.use('/api/v1/*', (req, res) => {
   res.status(404).send({
     status: 404,

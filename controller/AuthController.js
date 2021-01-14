@@ -23,6 +23,7 @@ let login = async (req, res, next) => {
     if (bcrypt.compareSync(password,user.password)) {
         try {
             let reqData = {
+                _id:user._id,
                 username: req.body.username,
                 password: req.body.password
             }
@@ -54,7 +55,7 @@ let login = async (req, res, next) => {
  */
 let register = async (req, res, next) => {
   if(!validatePassword(req.body.password)){
-      return res.status(494).send({
+      return res.status(404).send({
           message:`Mật khẩu ít nhất 8 kí tự,1 chữ hoa và 1 số!`
       })
   }

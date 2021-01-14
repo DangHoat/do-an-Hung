@@ -7,10 +7,11 @@ const check  = require('./ValidInput')
  * @param {*} scret 
  * @param {*} ttl 
  */
-let createToken = (user,secretKey = process.env.KEY,ttl = process.env.TTL)=>{
+let createToken = (user,secretKey = process.env.KEY,ttl = process.env.TTL||"1h")=>{
    
     return new Promise((resolve,reject)=>{
         const data ={
+            _id:user._id,
             username: user.username,
             password: user.password
         }
@@ -41,6 +42,11 @@ let verifyToken =(token,secretKey)=>{
             });  
     });
 }
+/**
+ * 
+ * @param {*} token 
+ * @param {*} secretKey 
+ */
 let refreshToken = (token,secretKey)=>{
     const decodeToken = jwt.verify(token,secretKey,(err,data)=>{
         if(err) return null;
@@ -52,5 +58,6 @@ let refreshToken = (token,secretKey)=>{
 }
 module.exports = {
     createToken:createToken,
-    verifyToken:verifyToken
+    verifyToken:verifyToken,
+    refreshToken:refreshToken
 }
