@@ -22,8 +22,12 @@ require("./database/index")
 //set forder
 app.use(express.static("public"));
 //set CORS
+
 app.use(cors())
 io.set('origins', '*:*');
+
+
+
 // ======================================= //
 //set request
 app.use(express.json())
@@ -109,7 +113,7 @@ async function saveTrack(TrackID,jsonData){
 }
 
 
-server.listen(app.get('port'), (req,res) => {
-  console.log(`Listening port : ${app.get('port')}`)
-  
-})
+server.listen(app.get("port"), () => {
+  console.log(`Listening port : ${app.get("port")}`);
+});
+
