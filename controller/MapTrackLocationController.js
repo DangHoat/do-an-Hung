@@ -8,10 +8,22 @@ const getMapUser = (req,res)=>{
         
     }
 }
+const getTracker = (req,res)=>{
+}
+const updatTracker = (req,res)=>{
+    const {name,password,password2,phone} = req.body
+    return res.status(200).send({
+        
+    })
+
+}
 const createTrack = (req,res)=>{
     let {usesname,password} = req.body;
 
 }
 module.exports ={
-    getMapUser : getMapUser
+    getMapUser : getMapUser,
+    createTrack:createTrack,
+    getTracker : getTracker,
+    updatTracker:updatTracker
 }

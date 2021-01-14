@@ -2,6 +2,7 @@ const jwtUltils = require('../utils/jwt')
 const bcrypt = require('bcrypt')
 const User = require('../database/Schema/User')
 const {validatePassword} = require('../utils/ValidInput')
+const { use } = require('../routeAPI/mapRoute')
 
 //method post
 let login = async (req, res, next) => {
@@ -11,6 +12,7 @@ let login = async (req, res, next) => {
          user = await User.findOne({
             username: username
         })
+        console.log(user)
     } catch (error) {
         return res.status(404).json(error)
     }
@@ -26,8 +28,15 @@ let login = async (req, res, next) => {
             }
             let token = await jwtUltils.createToken(reqData)
             let result = {
-                username: reqData.username,
-                password: reqData.password,
+                user : {
+                    "create_at": user.create_at,
+                    "_id": user._id ,
+                    "username": user.username,
+                    "email": user.email,
+                    "phoneNumber": user.phoneNumber,
+                    "role": user.role,
+                    "address": user.address,
+                },
                 token: token
             }
             return res.status(200).json(result)
