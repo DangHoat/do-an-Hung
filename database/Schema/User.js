@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         },message: props => `${props.value} email không đúng định dạng`
 
     },
-    tracker :[
+    trackID :[
         
     ],
     create_at: {

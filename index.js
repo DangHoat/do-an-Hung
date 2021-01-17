@@ -53,7 +53,7 @@ const middleware = require('./routeAPI/Middleware/AuthMiddleware')
 //inport routeAPI
 const authRoute = require('./routeAPI/authRoute.js')
 app.use('/api/v1/auth', authRoute)
-app.use(middleware.middlwareIsAuth)
+
 const trackRoute = require('./routeAPI/trackRoute')
 app.use('/api/v1/track', trackRoute)
 const mapRoute = require('./routeAPI/mapRoute')

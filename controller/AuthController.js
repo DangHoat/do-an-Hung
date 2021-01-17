@@ -12,7 +12,7 @@ let login = async (req, res, next) => {
          user = await User.findOne({
             username: username
         })
-        console.log(user)
+    
     } catch (error) {
         return res.status(404).json(error)
     }

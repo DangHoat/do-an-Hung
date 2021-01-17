@@ -7,15 +7,11 @@ const check  = require('./ValidInput')
  * @param {*} scret 
  * @param {*} ttl 
  */
-let createToken = (user,secretKey = process.env.KEY,ttl = process.env.TTL||"1h")=>{
+let createToken = (data,secretKey = process.env.KEY,ttl = process.env.TTL||"1h")=>{
    
     return new Promise((resolve,reject)=>{
-        const data ={
-            _id:user._id,
-            username: user.username,
-            password: user.password
-        }
-        if(check.isEmpty(data.username)&&check.isEmpty(data.password)){
+        
+        if(check.isEmpty(data.username||data.name)&&check.isEmpty(data.password)){
             reject({message:"Thiếu thông tin đăng nhập!"})
         }
         jwt.sign(
